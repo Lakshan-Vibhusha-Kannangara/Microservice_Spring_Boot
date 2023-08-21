@@ -1,0 +1,27 @@
+server:
+  port: 8061
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  tracing:
+    sampler:
+      probability: 1.0
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: logon-service
+          uri: lb://logon-service
+          predicates:
+            - Path=/logon/**
+        - id: blog-service
+          uri: lb://blog-service
+          predicates:
+            - Path=/blog/**
